@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+option go_package = "./pb";
+
+package pb;
+
+// 需要先针对该 proto 文件使用 protoc 命令生成
+// protoc -I ./ --go_out=paths=source_relative:. --go-grpc_out=paths=source_relative:. userModel.proto
+// 再使用 goctl 针对 user.proto 生成代码
+// goctl rpc protoc user.proto -I ./ --go_out=../ --go-grpc_out=../ --zrpc_out=../ --style=goZero
+message UserModel {
+  int64 id = 1;
+  string nickname = 2;
+}

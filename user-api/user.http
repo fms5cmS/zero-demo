@@ -1,0 +1,19 @@
+### Send POST request with json body
+POST http://127.0.0.1:9090/userapi/v1/user/info
+Content-Type: application/json
+
+{
+  "userId": 1
+}
+
+### Send Get request
+GET http://0.0.0.0:9090/userapi/v1/user/info/1
+
+### Send POST request with json body
+POST http://0.0.0.0:9090/userapi/v1/user/create
+Content-Type: application/json
+
+{
+  "name": "优妮",
+  "nickname": "仙贝"
+}

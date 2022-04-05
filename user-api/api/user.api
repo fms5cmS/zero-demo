@@ -1,0 +1,64 @@
+syntax = "v1"  // api语法版本
+
+info(
+	author: "fms5cmS"
+	date: "2022-04-02"
+	desc: "api语法示例及语法说明"
+)
+
+// 支持的 tag 见 https://go-zero.dev/cn/api-grammar.html
+type (
+	UserCreateReq {
+		Name     string `json:"name"`
+		Nickname string `json:"nickname"`
+	}
+	UserCreateResp {
+		Flag bool `json:"flag"`
+	}
+)
+
+type (
+	UserInfoReq {
+		UserId int64 `path:"userId"` // 这是路径参数
+	}
+	UserInfoResp {
+		UserId   int64  `json:"userId"`
+		Nickname string `json:"nickname"`
+	}
+)
+
+type (
+	UserInfoUpdateReq {
+		UserId   int64  `json:"userId"`
+		Nickname string `json:"nickname"`
+	}
+	UserInfoUpdateResp {
+		Flag bool `json:"flag"`
+	}
+)
+
+@server(
+	group: user // 分组，不是对路由分组，而是将 handler、loagic 按目录分组
+	prefix: userapi/v1 // 路由分组
+	middleware: TestMiddleware
+)
+service user-api {
+	@doc "新增用户"
+	@handler userCreate
+	post /user/create (UserCreateReq) returns (UserCreateResp)
+	
+	@doc "获取用户信息"
+	@handler userInfo
+	//	get /user/info (UserInfoReq) returns (UserInfoResp)
+	get /user/info/:userId (UserInfoReq) returns (UserInfoResp)
+}
+
+@server(
+	group: user // 分组，不是对路由分组，而是将 handler、loagic 按目录分组
+	middleware: TestMiddleware2
+)
+service user-api { // 这里要和上面一致
+	@doc "修改用户信息"
+	@handler userInfoUpate
+	post /user/infoupdate (UserInfoUpdateReq) returns (UserInfoUpdateResp)
+}

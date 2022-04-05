@@ -1,0 +1,28 @@
+Name: user-api
+Host: 0.0.0.0
+Port: 9090
+Timeout: 10000 # 默认的超时时间是 3s
+
+UserRpcConf:
+  Endpoints: # 配置和另一个服务 IP 直连
+    - 127.0.0.1:9009
+#  Target: k8s://zero-demo/rpc-svc:9009  # k8s
+#  Etcd:  # 配置 etcd 服务发现
+#    Hosts:
+#      - 192.168.56.200:12379
+#    Key: user.rpc
+
+
+Log:
+  ServiceName: user-api
+#  Mode: file
+#  Path: logs
+  Mode: console
+  Level: info
+  Encoding: plain # plain 是以堆栈的形式打印，方便开发时查看，json 则是把这些信息都整理成一行了
+
+DB:
+  DataSource: root:123456@tcp(192.168.56.200:3306)/learn?charset=utf8mb4&parseTime=True&loc=Local
+Cache:
+  - Host: 192.168.56.200:6379
+    Pass:
